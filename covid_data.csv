@@ -1,0 +1,13 @@
+SNo,observationdate,state,country,lastupdate,confirmed,deaths,recovered
+1,1/22/2020,Anhui,Mainland China,1/22/2020 17:00,1,0,0
+2,1/22/2020,Beijing,Mainland China,1/22/2020 17:00,14,0,0
+3,1/22/2020,Chongqing,Mainland China,1/22/2020 17:00,6,0,0
+4,1/22/2020,Fujian,Mainland China,1/22/2020 17:00,1,0,0
+5,1/22/2020,Gansu,Mainland China,1/22/2020 17:00,0,0,0
+6,1/22/2020,Guangdong,Mainland China,1/22/2020 17:00,26,0,0
+7,1/22/2020,Guangxi,Mainland China,1/22/2020 17:00,2,0,0
+8,1/22/2020,Guizhou,Mainland China,1/22/2020 17:00,1,0,0
+9,1/22/2020,Hainan,Mainland China,1/22/2020 17:00,4,0,0
+10,1/22/2020,Hebei,Mainland China,1/22/2020 17:00,1,0,0
+11,1/22/2020,Heilongjiang,Mainland China,1/22/2020 17:00,0,0,0
+12,1/22/2020,Henan,Mainland China,1/22/2020 17:00,5,0,0
