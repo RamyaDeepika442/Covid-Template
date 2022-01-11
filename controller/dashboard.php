@@ -1,7 +1,7 @@
 <?php
 include("../libraries/connection.php");
 
-// Infinite Scroll
+// Infinite Scroll code
 $sqlQuery = "SELECT id,observationdate,state,country,lastupdate,confirmed,deaths,recovered FROM covid_data";
 $result = mysqli_query($conn, $sqlQuery);
 $total_count = mysqli_num_rows($result);
