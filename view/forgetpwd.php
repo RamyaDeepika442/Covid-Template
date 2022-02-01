@@ -9,6 +9,11 @@ include("../module/newpassword.php");
           <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
             <div class="card col-lg-4 mx-auto">
               <div class="card-body px-5 py-5">
+                <?php if(!empty($msg)): ?>
+                  <div class = "alert <?php echo $css_class; ?>">
+                    <?php echo $msg; ?>
+                  </div>
+                <?php endif; ?>
                <h3 class="card-title text-left mb-3">Forget Password</h3>
                  <form action="" method="POST" id = "forgetpwd_form">
                   <div class="form-group">

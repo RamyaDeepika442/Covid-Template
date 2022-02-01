@@ -2,8 +2,18 @@
 include("../libraries/connection.php");
 
 $lastId = $_GET['lastId'];
+$sortValue = $_GET['sortValue'];
+$condition = "";
 
-$sqlQuery = "SELECT id,observationdate,state,country,lastupdate,confirmed,deaths,recovered FROM covid_data WHERE id > '" . $lastId . "' LIMIT 5";
+if($sortValue == 'ASC') {
+   $condition = "WHERE id > $lastId ORDER BY id $sortValue";
+} else if($sortValue == 'DESC') {
+   $condition = "WHERE id < $lastId ORDER BY id $sortValue";
+} else {
+  $condition = "WHERE id > $lastId ORDER BY id $sortValue";
+}
+
+$sqlQuery = "SELECT id,observationdate,state,country,lastupdate,confirmed,deaths,recovered FROM covid_data $condition LIMIT 5";
 $result = mysqli_query($conn, $sqlQuery);
 
      // output data of each row

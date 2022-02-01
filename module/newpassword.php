@@ -7,10 +7,11 @@ if (isset($_POST['submit'])) {
     if ($email != "" && $npwd != "") {
     	$sql = "UPDATE user_details SET pwd = md5('$_POST[npwd]') WHERE email = '$_POST[email]'";
     	$result = mysqli_query($conn, $sql);
-      echo "<script>alert('Password updated successfully!')</script>";
-    	header("Location: ../controller/login.php");
+      echo "<script>alert('Password Updated Successfully!')</script>";
+    	header("Location: ../controller/loginform.php");
    } else {
-      echo "<script>alert('Please fill all the fields!')</script>";
+      $msg = "Please fill all the fields!";
+    	$css_class = "alert-danger";
    }
  }
 ?>

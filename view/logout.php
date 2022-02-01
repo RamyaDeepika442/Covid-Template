@@ -2,5 +2,5 @@
 session_start();
 session_destroy();
 
-header("Location: ../controller/login.php");
+header("Location: ../controller/loginform.php");
  ?>

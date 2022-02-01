@@ -93,7 +93,7 @@ function upload() {
 //  alert(csvfile);
   var fd = new FormData();
   fd.append('filename', csvfilename);
-  fd.append('action', "importdata");
+  fd.append('action', "importdata2");
   $.ajax({
     url: "../module/dynamic_table.php",
     method: "POST",
@@ -128,21 +128,15 @@ function upload() {
 // Get the modal
 var modal = document.getElementById("myModal");
 
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
 // When the user clicks the button, open the modal
-btn.onclick = function() {
+$(document).on('click','#myBtn',function() {
   modal.style.display = "block";
-}
+})
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
+$(document).on('click','.close',function() {
+    modal.style.display = "none";
+})
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
@@ -155,21 +149,15 @@ window.onclick = function(event) {
 // Get the modal
 var secondmodal = document.getElementById("secondModal");
 
-// Get the button that opens the modal
-var button = document.getElementById("secondBtn");
-
-// Get the <span> element that closes the modal
-var spanele = document.getElementsByClassName("close1")[0];
-
 // When the user clicks the button, open the modal
-button.onclick = function() {
+$(document).on('click','#secondBtn',function() {
   secondmodal.style.display = "block";
-}
+})
 
 // When the user clicks on <span> (x), close the modal
-spanele.onclick = function() {
-  secondmodal.style.display = "none";
-}
+$(document).on('click','.close1',function() {
+    secondmodal.style.display = "none";
+})
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
@@ -235,18 +223,20 @@ window.onload = load_data();
 //Infinite scroll
 $('#scroll').scroll(function() {
     if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
-        //  if ($("#table-height").scrollTop() == $(document).height() - $("#table-height").height()){
+      var sortValue = document.getElementById("sort").value;
+      //   if ($("#table-height").scrollTop() == $(document).height() - $("#table-height").height()){
             if($(".table-data").length < $("#total_count").val()) {
                 var lastId = $(".table-data:last").attr("id");
-                getMoreData(lastId);
+                getMoreData(lastId,sortValue);
             }
         }
      });
 
-function getMoreData(lastId) {
+function getMoreData(lastId,sortValue) {
     $.ajax({
         url: '../module/getmoredata.php?lastId=' + lastId,
         type: "get",
+        data: {sortValue: sortValue},
         success: function (data) {
         	  setTimeout(function() {
             $(".scroll-data").append(data);
@@ -256,8 +246,8 @@ function getMoreData(lastId) {
 }
 
 // Infinite scroll 2
-$('#scroll2').scroll(function() {
- if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+  $('#scroll2').scroll(function() {
+  if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
     if($(".add-table-data").length < $("#total_data_count").val()) {
       var lastDataId = $(".add-table-data:last").attr("id");
       loadMoreData(lastDataId);
@@ -291,3 +281,67 @@ function sortBy(value) {
     }
   });
 }
+
+
+//Cropping Profile Picture
+$(document).ready(function(){
+  var $modal = $('#modal');
+  var image = document.getElementById('sample_image');
+  var cropper;
+
+	$('#upload_image').change(function(event){
+		var files = event.target.files;
+
+		var done = function(url){
+			image.src = url;
+			$modal.modal('show');
+		};
+
+		if(files && files.length > 0)
+		{
+			reader = new FileReader();
+			reader.onload = function(event)
+			{
+				done(reader.result);
+			};
+			reader.readAsDataURL(files[0]);
+   	}
+	});
+
+	$modal.on('shown.bs.modal', function() {
+		cropper = new Cropper(image, {
+			aspectRatio: 1,
+			viewMode: 3,
+			preview:'.preview'
+		});
+	}).on('hidden.bs.modal', function(){
+		cropper.destroy();
+   	cropper = null;
+	});
+
+	$('#crop').click(function(){
+		canvas = cropper.getCroppedCanvas({
+			width:400,
+			height:400
+		});
+
+		canvas.toBlob(function(blob){
+			url = URL.createObjectURL(blob);
+			var reader = new FileReader();
+			reader.readAsDataURL(blob);
+			reader.onloadend = function(){
+				var base64data = reader.result;
+				$.ajax({
+					url:'../module/profiledata.php',
+					method:'POST',
+					data:{image:base64data},
+					success:function(data)
+					{
+						$modal.modal('hide');
+						$('#uploaded_image').attr('src', data);
+					}
+				});
+			};
+		});
+	});
+});

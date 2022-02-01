@@ -6,15 +6,24 @@ session_start();
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo" href="../controller/login.php"><img src="../images/logo.svg" alt="logo" /></a>
-          <a class="sidebar-brand brand-logo-mini" href="../controller/login.php"><img src="../images/logo-mini.svg" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo" href="../controller/dashboard.php"><img src="../images/logo.svg" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo-mini" href="../controller/dashboard.php"><img src="../images/logo-mini.svg" alt="logo" /></a>
         </div>
         <ul class="nav">
           <li class="nav-item profile">
             <div class="profile-desc">
               <div class="profile-pic">
                 <div class="count-indicator">
-                  <img class="img-xs rounded-circle " src="../images/face15.jpg" alt="">
+
+                  <?php
+                  if($_SESSION['profileimage']) {
+                    $profile = $_SESSION['profileimage'];
+                  } else {
+                    $profile = "../images/default.jfif";
+                  }
+                  ?>
+
+                  <img class="img-xs rounded-circle " src="../images/<?php echo $profile; ?>" alt="">
                   <span class="count bg-success"></span>
                 </div>
                 <div class="profile-name">
@@ -47,15 +56,15 @@ session_start();
             <a class="navbar-brand brand-logo-mini" href="#"><img src="../images/logo-mini.svg" alt="logo" /></a>
           </div>
           <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-              <span class="mdi mdi-menu"></span>
-            </button>
+      <!--    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+          </button> -->
 
            <ul class="navbar-nav navbar-nav-right">
              <li class="nav-item dropdown d-none d-lg-block">
           <div class = d-flex>
-            <button  class="nav-link btn btn-success create-new-button" id="myBtn">+ Add Covid Data</button>
-            <button  class="nav-link btn btn-success create-new-button" id="secondBtn">+ Add Data Dynamically here</button>
+            <button type = "submit" class="nav-link btn btn-success create-new-button" id="myBtn">+ Add Covid Data</button>
+            <button type = "submit" class="nav-link btn btn-success create-new-button" id="secondBtn">+ Add Data Dynamically here</button>
           </div>
             <!-- first Modal-->
               <!-- The Modal -->
@@ -137,7 +146,7 @@ session_start();
                       <p class="text-muted mb-0"> 1 Minutes ago </p>
                     </div>
                   </a>
-                  <div class="dropdown-divider"></div>
+            <!--      <div class="dropdown-divider"></div>
                   <a class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
                       <img src="../images/face2.jpg" alt="image" class="rounded-circle profile-pic">
@@ -146,7 +155,7 @@ session_start();
                       <p class="preview-subject ellipsis mb-1">Cregh send you a message</p>
                       <p class="text-muted mb-0"> 15 Minutes ago </p>
                     </div>
-                  </a>
+                  </a>  -->
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
@@ -211,7 +220,7 @@ session_start();
               <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
-                    <img class="img-xs rounded-circle" src="../images/face15.jpg" alt="">
+                    <img class="img-xs rounded-circle" src="../images/<?php echo $profile; ?>" alt="">
                     <p class="mb-0 d-none d-sm-block navbar-profile-name"><?php echo $_SESSION['username']; ?></p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
@@ -219,18 +228,15 @@ session_start();
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
                   <h6 class="p-3 mb-0">Profile</h6>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-settings text-success"></i>
-                      </div>
-                    </div>
                     <div class="preview-item-content">
-                      <p class="preview-subject mb-1">Settings</p>
+                      <a class="nav-link space" href="../controller/profilesettings.php"> Profile Settings </a>
                     </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <button class ="btn m-3"><a href="../view/logout.php">Logout</a></button>
+                    <div class="dropdown-divider"></div>
+                     <div class="preview-item-content">
+                      <a class="nav-link space" href="../controller/myprofile.php"> My Profile </a>
+                     </div>
+                   <div class="dropdown-divider"></div>
+                   <a class="nav-link space" href="../view/logout.php"> Logout </a>
               </li>
             </ul>
             <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -288,8 +294,8 @@ session_start();
                        <label for = "sort">Sort By</label>
                        <select id = "sort" name = "sort" class = "option" onchange="sortBy()">
                          <option value = "" disabled = "" selected = "">select</option>
-                         <option class = "option" value = "asc">ASC</option>
-                         <option class = "option" value = "dsc">DSC</option>
+                         <option class = "option" value = "ASC">ASC</option>
+                         <option class = "option" value = "DESC">DESC</option>
                          <option class = "option" value = "last">Latest Entries</option>
                        </select>
                      </div>

@@ -47,7 +47,7 @@ include("../view/header.php");
                   <div class="text-center">
                     <input type="submit" class="btn btn-primary btn-block enter-btn" value = "Submit" id = "signup" name = "submit" onclick="senddata()"/>
                   </div>
-               <p class="sign-up">Already have an Account?<a href="../controller/login.php">Login Here</a></p>
+               <p class="sign-up">Already have an Account?<a href="../controller/loginform.php">Login Here</a></p>
                 </form>
               </div>
             </div>

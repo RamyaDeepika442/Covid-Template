@@ -28,7 +28,7 @@ if(mysqli_query($conn, $table)) {
 }
 
 
-if($_POST['action'] == 'importdata') {
+if($_POST['action'] == 'importdata2') {
   if(!empty($_FILES['filename']['name']))
   {
     $allowed_ext = array("csv");
